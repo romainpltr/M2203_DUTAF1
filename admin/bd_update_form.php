@@ -17,31 +17,64 @@
             $auteurs = array();
             $editeurs = array();
             $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
-            $req = 'SELECT * from auteur INNER JOIN album ON auteur.auteur_id = album.auteur_id_ INNER JOIN editeur ON album.editeur_id_ = editeur.editeur_id';
+            $req = 'SELECT * from album';
             $res = $bdd->query($req);
-        
             while($table_info = $res->fetch()){
-            
-            $album = new album();
-            $album->newAuteur();
-            $album->getAuteur()->setID($table_info['auteur_id']);
-            $album->getAuteur()->setAge($table_info['auteur_age']);
-            $album->getAuteur()->setFirstName($table_info['auteur_prenom']);
-            $album->getAuteur()->setLastName($table_info['auteur_nom']);
-            $album->getAuteur()->setNationality($table_info['auteur_nat']);
+                $album = new album();
+                $album->setID($table_info['album_id']);
+                $album->setID_Editeur($table_info['auteur_id_']);
+                $album->setID_Auteur($table_info['editeur_id_']);
+                $album->setISBN($table_info['album_isbn']);
+                $album->setSerie($table_info['album_serie']);
+                $album->setTitle($table_info['album_titre']);
+                $album->setPrix($table_info['album_prix']);
+                $albums[] = $album;
+            }
+    
+            $res->closeCursor();
+    
+            $req = 'SELECT * from auteur';
+            $res = $bdd->query($req);
+            while($table_info = $res->fetch()){
+                $auteur = new auteur();
+                $auteur->setID($table_info['auteur_id']);
+                $auteur->setAge($table_info['auteur_age']);
+                $auteur->setFirstName($table_info['auteur_prenom']);
+                $auteur->setLastName($table_info['auteur_nom']);
+                $auteur->setNationality($table_info['auteur_nat']);
+                $auteurs[] = $auteur;
+            }
+    
+            $res->closeCursor();
+    
+            $req = 'SELECT * from editeur';
+            $res = $bdd->query($req);
+            while($table_info = $res->fetch()){
+                $editeur = new editeur();
+                $editeur->setID($table_info['editeur_id']);
+                $editeur->setName($table_info['editeur_nom']);
+                $editeur->setCountry($table_info['editeur_pays']);
+                $editeur->setTelephone($table_info['editeur_tel']);
+                $editeurs[] = $editeur;
+            }
+    
+            $res->closeCursor();
         
-            $album->setID($table_info['album_id']);
-            $album->setISBN($table_info['album_isbn']);
-            $album->setSerie($table_info['album_serie']);
-            $album->setTitle($table_info['album_titre']);
-            $album->setPrix($table_info['album_prix']);
-            
-            $album->newEditor();
-            $album->getEditor()->setID($table_info['editeur_id']);
-            $album->getEditor()->setName($table_info['editeur_nom']);
-            $album->getEditor()->setCountry($table_info['editeur_pays']);
-            $album->getEditor()->setTelephone($table_info['editeur_tel']);
-            $albums[] = $album;
+            for($i= 0; $i < count($editeurs); $i++){
+                for($i= 0; $i < count($auteurs); $i++){
+                    for($a= 0; $a < count($albums); $a++){
+                        if(isset($editeurs[$i])){
+                            if($editeurs[$i]->getID() == $albums[$a]->getID_Editeur()){
+                                $albums[$a]->setEditor($editeurs[$i]);
+                            }
+                        }
+                        if(isset($auteurs[$i])){
+                            if($auteurs[$i]->getID() == $albums[$a]->getID_Auteur()){
+                                $albums[$a]->setAuteur($auteurs[$i]);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -80,12 +113,6 @@
             }else if(!empty($_POST['tel'])){
                 $albums[$pos]->getEditor()->setTelephone($_POST['tel']);
             }
-
-
-            $req = 'UPDATE album, editeur, auteur SET album.
-            
-            album_id='.$albums[$pos]->getID().'AND editeur.editeur_id = '.$albums[$pos]->getEditeur()->getID().' AND auteur.auteur_id = '.$albums[$pos]->getAuteur()->getID();
-            $res = $bdd->query($req);
             
         }
 

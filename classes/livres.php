@@ -34,6 +34,10 @@ class auteur {
         return $this->nationalite;
     }
 
+    public function getObject(){
+        return $this;
+    }
+
     // Mutateurs
 
     public function setID($id){
@@ -89,6 +93,10 @@ class editeur {
         return $this->telephone;
     }
 
+    public function getObject(){
+        return $this;
+    }
+
     public function setID($id){
         $this->id = $id;
     }
@@ -124,13 +132,6 @@ class album {
         
     }
 
-    public function newEditor() {
-        $this->editeur = new editeur();
-    }
-
-    public function newAuteur() {
-        $this->auteur = new auteur();
-    }
 
     // Acceseur
 
@@ -169,6 +170,8 @@ class album {
     public function getID_Auteur(){
         return $this->id_auteur;
     }
+
+    
 
     // Mutateur
 

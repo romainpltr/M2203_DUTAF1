@@ -1,4 +1,4 @@
-AuthUserFile /home/mmi19g10/public_html/DUTAF/admin/htpasswd
+AuthUserFile /home/mmi19g10/public_html/dutaf/admin/htpasswd
 AuthName "Acces securise a mon site Dutaf"
 AuthType Basic
 <LIMIT GET POST>
