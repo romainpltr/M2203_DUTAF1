@@ -68,7 +68,9 @@
                     }
                     echo '
                     </select>
-                </div></form>';
+                </div>
+                <button type="submit" class="btn btn-success">Ajouter</button> 
+                </form>';
             }else if(!empty($_GET['type']) && $_GET['type'] == "auteur"){
             
                 echo '<form action="#" method="GET" ><div class="form-group">
@@ -86,7 +88,9 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Age de l`auteur:</label>
                     <input  class="form-control" id="exampleInputPassword1">
-                </div></form>';
+                </div>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+                </form>';
             }else if(!empty($_GET['type']) && $_GET['type'] == "editeur"){
                 echo '
                 <form action="#" method="GET" ><div class="form-group">
@@ -100,10 +104,13 @@
                 <div class="form-group">
                     <label for="exampleInputPassword1">Téléphone de l`editeur :</label>
                     <input class="form-control"  id="exampleInputPassword1">
-                </div></form>';
+                    <button type="submit" class="btn btn-success">Ajouter</button> 
+                </div>
+                <button type="submit" class="btn btn-success">Ajouter</button> 
+                </form>';
             }
             ?>
-            <button type="submit" class="btn btn-success">Ajouter</button> 
+            
             
             
             </form>
