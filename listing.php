@@ -132,28 +132,22 @@ if(empty($albums)){
     }
 
     echo '</tbody></table></div>';
-<<<<<<< HEAD
-    var_dump($auteurs);
-=======
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
     $_SESSION['albums'] = serialize($albums);
     $_SESSION['auteurs'] = serialize($auteurs);
     $_SESSION['editeurs'] = serialize($editeurs);
 
     ?>
-<<<<<<< HEAD
-    </body>
-
-</html>
-=======
      <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script> 
      <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
      <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
      <script type="text/javascript">
-        $(document).ready( function () {
-            $('#table_id').DataTable();
-        } );
+          $(document).ready( function () {
+                $('#table_id').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                    }
+                });
+            });
     </script>
     </body>
     </html>
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e

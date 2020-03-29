@@ -169,8 +169,12 @@
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
         <script type="text/javascript">
             $(document).ready( function () {
-                $('#table_id').DataTable();
-            } );
+                $('#table_id').DataTable({
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                    }
+                });
+            });
         </script>
     </footer>
 </html>
