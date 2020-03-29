@@ -13,9 +13,9 @@ J'ai donc décidé de restreindre au maximum les requetes, et de stocker mes él
 
 A l'heure actuel voici le schéma relationnel de mes objets
 
--_Objet Auteur_
--_ Objet Editeur_
--_Objet Livre : Objet Auteur et Objet Editeur_
+- _Objet Auteur_
+- _ Objet Editeur_
+- _Objet Livre : Objet Auteur et Objet Editeur_
 
 Tout ses objets sont stocker dans des tableaux indépendant.
 
