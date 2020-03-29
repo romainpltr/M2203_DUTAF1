@@ -171,7 +171,7 @@
             $(document).ready( function () {
                 $('#table_id').DataTable({
                     "language": {
-                        "url": "//cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                        "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
                     }
                 });
             });
