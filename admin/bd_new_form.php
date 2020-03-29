@@ -26,7 +26,14 @@
     <head>
         <title>Listing DUTAF - Ajouter un <?php echo $_GET['type'] ?></title
         <meta charset="UTF-8">
+<<<<<<< HEAD
         <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+=======
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+  
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
+>>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
     </head>
     <body>
         <?php include '../includes/header.php'; ?>
@@ -34,7 +41,11 @@
         <br>
             <?php if(!empty($_GET['type']) && $_GET['type'] == "livre"){ // Ajouter livre dans BDD + Créer Objet et l'ajouter dans le tableau.
                 echo '
+<<<<<<< HEAD
                 <form action="#" method="GET" ><div class="form-group">
+=======
+                <form action="bd_new_valide.php" method="GET" ><div class="form-group">
+>>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
                     <label for="exampleInputEmail1">Titre :</label>
                     <input class="form-control" name="l_title" aria-describedby="emailHelp">
                 </div>
@@ -51,7 +62,11 @@
                     <select class="form-control" name="auteur" id="exampleFormControlSelect1">
                     <option></option>';
                     for($i=0;$i<count($auteurs);$i++){
+<<<<<<< HEAD
                         echo '<option name="'.$auteurs[$i]->getID().'" >'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+=======
+                        echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+>>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
                     }
                     echo '
                     </select>
@@ -70,7 +85,11 @@
                 </form>';
             }else if(!empty($_GET['type']) && $_GET['type'] == "auteur"){
             
+<<<<<<< HEAD
                 echo '<form action="bd_new_form.php?" method="GET" ><div class="form-group">
+=======
+                echo '<form action="bd_new_valide.php" method="GET" ><div class="form-group">
+>>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
                     <label for="exampleInputPassword1">Prénom de l`auteur :</label>
                     <input  class="form-control" name="a_prenom" id="exampleInputPassword1">
                 </div>
@@ -90,7 +109,11 @@
                 </form>';
             }else if(!empty($_GET['type']) && $_GET['type'] == "editeur"){
                 echo '
+<<<<<<< HEAD
                 <form action="#" method="GET" ><div class="form-group">
+=======
+                <form action="bd_new_valide.php" method="GET" ><div class="form-group">
+>>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
                     <label for="exampleInputPassword1">Nom de l`editeur :</label>
                     <input class="form-control" name="e_name" id="exampleInputPassword1">
                 </div>
@@ -100,8 +123,12 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">Téléphone de l`editeur :</label>
+<<<<<<< HEAD
                     <input class="form-control" name="e_tel" id="exampleInputPassword1">
                     <button type="submit" class="btn btn-success">Ajouter</button> 
+=======
+                    <input class="form-control" name="e_tel" id="exampleInputPassword1"> 
+>>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
                 </div>
                 <button type="submit" class="btn btn-success">Ajouter</button> 
                 </form>';
