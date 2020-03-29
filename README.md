@@ -5,7 +5,7 @@ J'ai décidé de faire ce projet en POO pour pouvoir m'améliorer et améliorer 
 Je sais que le code serais plus simple avec de simple requetes PDO vers MariaDB, seulement cela a un coup mémoire non négligeable pour le serveur.
 J'ai donc décidé de restreindre au maximum les requetes, et de stocker mes élements dans des session pour les faire transiter de page en pages.
 
-** CE QU'IL ME RESTE A FAIRE **
+**CE QU'IL ME RESTE A FAIRE**
 
 - Implémentation des nouvaux livre, auteurs, et titre.
 - Implémentation de la modification des livres, auteurs et editeurs indépendament de leur livre attribuer (Pour pouvoir modifier un ensemble de livre à la fois,   exemple la ville de l'auteur Uderzo change, je veux que tout ses bouquins au pour la ville de l'auteur, changer).
@@ -13,9 +13,9 @@ J'ai donc décidé de restreindre au maximum les requetes, et de stocker mes él
 
 A l'heure actuel voici le schéma relationnel de mes objets
 
-_- Objet Auteur_
-_- Objet Editeur_
-_- Objet Livre : Objet Auteur et Objet Editeur_
+-_Objet Auteur_
+-_ Objet Editeur_
+-_Objet Livre : Objet Auteur et Objet Editeur_
 
 Tout ses objets sont stocker dans des tableaux indépendant.
 
