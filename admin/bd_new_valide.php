@@ -80,7 +80,7 @@ else if(!empty($_GET['e_name']) ||
 }
 
 //LIVRE
-else if(!empty($_GET['auteur'])){
+else if(!empty($_GET['type']) == "livre"){
     var_dump($_GET['auteur']);
 }
 
