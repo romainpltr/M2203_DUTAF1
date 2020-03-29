@@ -175,7 +175,6 @@
                     },
                     "initComplete": function () {
                         var api = this.api();
-                    
                         // Put the sum of column 5 into the footer cell
                         $( api.column( 5 ).footer() ).html(
                             api.column( 5 ).data().reduce( function (a, b) {

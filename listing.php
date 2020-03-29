@@ -141,10 +141,19 @@ if(empty($albums)){
      <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
      <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
      <script type="text/javascript">
-          $(document).ready( function () {
+            $(document).ready(function () {
                 $('#table_id').DataTable({
                     "language": {
                         "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                    },
+                    "initComplete": function () {
+                        var api = this.api();
+                        // Put the sum of column 5 into the footer cell
+                        $( api.column( 5 ).footer() ).html(
+                            api.column( 5 ).data().reduce( function (a, b) {
+                                return a + b;
+                            } )
+                        );
                     }
                 });
             });
