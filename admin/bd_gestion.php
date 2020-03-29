@@ -91,15 +91,10 @@
     <head>
         <title>Listing DUTAF</title>
         <meta charset="UTF-8">
-<<<<<<< HEAD
-        <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
-
-=======
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
        
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
 
     </head>
 
@@ -121,11 +116,7 @@
     <div class="container-fluid">    
     <br>
 
-<<<<<<< HEAD
-    <table class="table"><thead>';
-=======
     <table id="table_id" class="table"><thead>';
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
 
     echo '<tr><th scope="col">ID</><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th><th scope="col"></th><th scope="col"></th></tr></thead><tbody>';
     
@@ -173,8 +164,6 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-=======
         <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script> 
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
@@ -183,6 +172,5 @@
                 $('#table_id').DataTable();
             } );
         </script>
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
     </footer>
 </html>

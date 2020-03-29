@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<?php 
-=======
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,18 +12,13 @@
     <?php include('includes/header.php');?>
     <?php 
     
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
     include('config_inc.php');
     if(isset($_GET['auteur'])){
         $auteur = $_GET['auteur'];
         $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
         $req = 'SELECT * from auteur INNER JOIN album ON auteur.auteur_id = album.auteur_id_ INNER JOIN editeur ON album.editeur_id_ = editeur.editeur_id WHERE (auteur.auteur_nom LIKE "%'.$auteur.'%") OR (auteur.auteur_prenom LIKE "%'.$auteur.'%") ORDER BY auteur.auteur_nom, auteur.auteur_prenom ASC';
         $res = $bdd->query($req);
-<<<<<<< HEAD
-        echo '<div class="container"><table class="table"><thead>';
-=======
         echo '<br><div class="container"><table id="table_id" class="table"><thead>';
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
         echo '<tr><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th></tr></thead><tbody>';
         while($ligne = $res->fetch()){
             echo '<tr>
@@ -47,9 +39,6 @@
         
     }
 
-<<<<<<< HEAD
-?>
-=======
 ?>
  <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script> 
      <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -59,4 +48,3 @@
             $('#table_id').DataTable();
         } );
     </script>
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e

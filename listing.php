@@ -90,27 +90,17 @@ if(empty($albums)){
     <head>
         <title>Listing DUTAF</title>
         <meta charset="UTF-8">
-<<<<<<< HEAD
-        <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
-
-    </head>
-=======
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
         </head>
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
 
     <body>
     <?php include('includes/header.php');?>
     
     <?php 
     
-<<<<<<< HEAD
-    echo '<div class="container"><table class="table"><thead>';
-=======
     echo '<br><div class="container"><table id="table_id" class="table table-striped table-bordered"><thead>';
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
     echo '<tr><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th></tr></thead><tbody>';
 
     for($i = 0; $i < count($albums); $i++){

@@ -1,6 +1,4 @@
 <?php 
-<<<<<<< HEAD
-=======
 include('../config_inc.php');
 include('../classes/livres.php');
 session_start();
@@ -17,14 +15,10 @@ if(!empty($_SESSION['editeurs'])){
 
 
 
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
 
 //AUTEUR
 if(!empty($_GET['a_prenom']) || !empty($_GET['a_name']) || 
 !empty($_GET['a_nationalite']) || !empty($_GET['a_age'])){
-<<<<<<< HEAD
-    
-=======
     // RECUPERATION DES INFOS
     $id;
     $prenom = $_GET['a_prenom'];
@@ -62,14 +56,10 @@ if(!empty($_GET['a_prenom']) || !empty($_GET['a_name']) ||
 
 
 
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
 }
 //EDITEUR
 else if(!empty($_GET['e_name']) || 
 !empty($_GET['e_tel']) || !empty($_GET['e_country'])){
-<<<<<<< HEAD
-    
-=======
 
     $name = $_GET['e_name'];
     $tel = $_GET['e_tel'];
@@ -87,7 +77,6 @@ else if(!empty($_GET['e_name']) ||
     $edteurs[] = $editeur;
    
 
->>>>>>> d4763539a7b0d5213894362efdbb2d3c575d1e2e
 }
 
 //LIVRE
