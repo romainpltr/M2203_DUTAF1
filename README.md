@@ -1,7 +1,7 @@
 # PHP_DUTAF1
 Dutaf 1 is a project of a library gestion create on POO with PHP
 
-J'ai décidé de faire ce projet en POO pour pouvoir m'améliorer et améliorer ma compréhention de ceux-ci.
+J'ai décidé de faire ce projet en POO pour pouvoir m'améliorer et améliorer ma compréhension de ceux-ci.
 Je sais que le code serais plus simple avec de simple requetes PDO vers MariaDB, seulement cela a un coup mémoire non négligeable pour le serveur.
 J'ai donc décidé de restreindre au maximum les requetes, et de stocker mes élements dans des session pour les faire transiter de page en pages.
 
