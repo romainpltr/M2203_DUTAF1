@@ -154,33 +154,23 @@
                 <input  class="form-control" name="price" value="<?php echo $albums[$pos]->getPrix(); ?>" id="exampleInputPassword1">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Prénom de l'auteur :</label>
-                <input  class="form-control" name="f_name" value="<?php echo $albums[$pos]->getAuteur()->getFirstName(); ?>" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Nom de l'auteur :</label>
-                <input  class="form-control" name="l_name" value="<?php echo $albums[$pos]->getAuteur()->getLastName(); ?> " id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Nationalité de l'auteur :</label>
-                <input  class="form-control" name="nationality" value="<?php echo $albums[$pos]->getAuteur()->getNationality(); ?> " id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Age de l'auteur:</label>
-                <input  class="form-control" name="age" value="<?php echo $albums[$pos]->getAuteur()->getAge(); ?>" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Nom de l'editeur :</label>
-                <input class="form-control" name="editor_name" value="<?php echo $albums[$pos]->getEditor()->getName(); ?>" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Pays de l'editeur :</label>
-                <input class="form-control"  name="country" value="<?php echo $albums[$pos]->getEditor()->getCountry(); ?>" id="exampleInputPassword1">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Téléphone de l'editeur :</label>
-                <input class="form-control" name="tel" value="<?php echo $albums[$pos]->getEditor()->getTelephone(); ?>" id="exampleInputPassword1">
-            </div>
+                    <label for="exampleFormControlSelect1">Auteur</label>
+                    <select class="form-control" name="auteur" id="exampleFormControlSelect1">
+                    <?php 
+                    for($i=0;$i<count($auteurs);$i++){
+                        echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                    } ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Editeur</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                    <?php
+                    for($i=0;$i<count($editeurs);$i++){
+                        echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
+                    } ?>
+                    </select>
+                </div>
             <button type="submit" class="btn btn-success">Modifier</button> 
             
             

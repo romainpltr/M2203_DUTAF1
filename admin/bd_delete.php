@@ -1,16 +1,17 @@
 <?php 
 session_start();
 include('../config_inc.php');
-include '../classes/livres.php';
+include('../classes/livres.php');
+require('../functions/function_bdd.php');
+
 $albums = unserialize($_SESSION['albums']);
 $num_id = $_GET['num_id'];
 $pos;
 $album_name;
-$bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
+
+
 $req = 'DELETE FROM album WHERE album_id = '.$num_id.'';
-$res = $bdd->query($req);
-
-
+BDD_Del($req);
 for($i=0; $i < count($albums); $i++){
     if(!empty($albums[$i])){
         if(isset($num_id) && $albums[$i]->getID() == $num_id){

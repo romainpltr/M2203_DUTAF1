@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <?php 
-    
+
     session_start();
     include('../classes/livres.php');
-    include('../config_inc.php');
+    require('../functions/function_bdd.php');
     $admin = 1;
     $albums = array();
     $auteurs = array();
     $editeurs = array();
-    
 
+    // On vérifie si il n'existe pas les tableau dans la session
     if(!empty($_SESSION['albums'])){
         $albums = unserialize($_SESSION['albums']);
      }
     if(!empty($_SESSION['auteurs'])){
-         $auteurs = unserialize($_SESSION['auteurs']);
+        $auteurs = unserialize($_SESSION['auteurs']);
     } 
     if(!empty($_SESSION['editeurs'])){
-         $editeurs = unserialize($_SESSION['editeurs']);
+        $editeurs = unserialize($_SESSION['editeurs']);
     }
 
+    // Sinon on récupere les données depuis la base de données
     if(empty($albums) || empty($auteurs) || empty($editeurs)){
         $albums = array();
         $auteurs = array();
         $editeurs = array();
-        $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
+
         $req = 'SELECT * from album';
-        $res = $bdd->query($req);
+        $res = BDD_Select($req, $res);
         while($table_info = $res->fetch()){
             $album = new album();
             $album->setID($table_info['album_id']);
@@ -38,11 +39,10 @@
             $album->setPrix($table_info['album_prix']);
             $albums[] = $album;
         }
-
         $res->closeCursor();
 
         $req = 'SELECT * from auteur';
-        $res = $bdd->query($req);
+        $res = BDD_Select($req, $res);
         while($table_info = $res->fetch()){
             $auteur = new auteur();
             $auteur->setID($table_info['auteur_id']);
@@ -52,11 +52,10 @@
             $auteur->setNationality($table_info['auteur_nat']);
             $auteurs[] = $auteur;
         }
-
         $res->closeCursor();
 
         $req = 'SELECT * from editeur';
-        $res = $bdd->query($req);
+        $res = BDD_Select($req, $res);
         while($table_info = $res->fetch()){
             $editeur = new editeur();
             $editeur->setID($table_info['editeur_id']);
@@ -65,9 +64,10 @@
             $editeur->setTelephone($table_info['editeur_tel']);
             $editeurs[] = $editeur;
         }
-
         $res->closeCursor();
     
+
+        // On affecte les auteurs et editeurs en fonction de leurs id au livres oû les id sont correspondant
         for($i= 0; $i < count($editeurs); $i++){
             for($i= 0; $i < count($auteurs); $i++){
                 for($a= 0; $a < count($albums); $a++){
@@ -127,7 +127,7 @@
                             <td>'.$albums[$i]->getISBN().'</td>
                             <td>'.$albums[$i]->getTitle().'</td>
                             <td>'.$albums[$i]->getSerie().'</td>
-                            <td>'.$albums[$i]->getPrix().'</td>';
+                            <td>'.$albums[$i]->getPrix().' €</td>';
                         
                             if(!empty($albums[$i]->getAuteur())){
                                 echo '<td>'.$albums[$i]->getAuteur()->getLastName().'</td>

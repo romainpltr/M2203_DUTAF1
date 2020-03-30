@@ -64,7 +64,7 @@
                     <select class="form-control" id="exampleFormControlSelect1">
                     <option></option>';
                     for($i=0;$i<count($editeurs);$i++){
-                        echo '<option>'.$editeurs[$i]->getName().'</option>';
+                        echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
                     }
                     echo '
                     </select>

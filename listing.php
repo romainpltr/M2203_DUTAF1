@@ -7,7 +7,6 @@ $auteurs = array();
 $editeurs = array();
 
 ob_start("ob_gzhandler");
-session_start();
 
 if(!empty($_SESSION['albums'])){
     $albums = unserialize($_SESSION['albums']);
@@ -109,7 +108,7 @@ if(empty($albums)){
             <td>'.$albums[$i]->getISBN().'</td>
             <td>'.$albums[$i]->getTitle().'</td>
             <td>'.$albums[$i]->getSerie().'</td>
-            <td>'.$albums[$i]->getPrix().'</td>';
+            <td>'.$albums[$i]->getPrix().' €</td>';
         
             if(!empty($albums[$i]->getAuteur())){
                 echo '<td>'.$albums[$i]->getAuteur()->getLastName().'</td>
@@ -132,6 +131,7 @@ if(empty($albums)){
     }
 
     echo '</tbody></table></div>';
+    
     $_SESSION['albums'] = serialize($albums);
     $_SESSION['auteurs'] = serialize($auteurs);
     $_SESSION['editeurs'] = serialize($editeurs);
