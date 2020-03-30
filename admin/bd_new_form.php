@@ -37,7 +37,13 @@
         <br>
             <?php if(!empty($_GET['type']) && $_GET['type'] == "livre"){ // Ajouter livre dans BDD + Créer Objet et l'ajouter dans le tableau.
                 echo '
-                <form action="bd_new_valide.php" method="GET" ><div class="form-group">
+                
+                <form action="bd_new_valide.php" method="GET" >
+                <div class="form-group">
+                    <label for="exampleInputEmail1">ISBN :</label>
+                    <input class="form-control" name="l_isbn" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
                     <label for="exampleInputEmail1">Titre :</label>
                     <input class="form-control" name="l_title" aria-describedby="emailHelp">
                 </div>
@@ -61,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Editeur</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" name="editeur" id="exampleFormControlSelect1">
                     <option></option>';
                     for($i=0;$i<count($editeurs);$i++){
                         echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';

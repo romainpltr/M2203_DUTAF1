@@ -12,6 +12,7 @@ $album_name;
 
 $req = 'DELETE FROM album WHERE album_id = '.$num_id.'';
 BDD_Del($req);
+
 for($i=0; $i < count($albums); $i++){
     if(!empty($albums[$i])){
         if(isset($num_id) && $albums[$i]->getID() == $num_id){

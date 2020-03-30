@@ -1,14 +1,16 @@
 <?php 
 
         // Include classe livres
+        include ('../functions/function_bdd.php');
         include('../classes/livres.php');
         include('../config_inc.php');
-
+        
 
         // Variables
 
         $num_id;
         $admin = 1;
+        $pos;
 
         // Si aucune $_SESSION['albums'] existe.
 
@@ -87,33 +89,46 @@
         // Si le num id = post => $num_id = id 
         !empty($_GET['num_id']) ?$num_id = $_GET['num_id']:""; ;
 
-        if(!empty($pos) && (!empty($_POST['title']) ||  !empty($_POST['series']) || 
-        !empty($_POST['price']) || !empty($_POST['f_name']) || 
-        !empty($_POST['l_name']) || !empty($_POST['natonality']) || 
-        !empty($_POST['age']) || !empty($_POST['editor_name']) || 
-        !empty($_POST['country']) || !empty($_POST['tel']))){
-            if($_POST['country']){
-                $albums[$pos]->getEditor()->setCountry($_POST['country']);
-            }else if(!empty($_POST['title'])){
-                $albums[$pos]->setTitle($_POST['title']);
-            }else if(!empty($_POST['series'])){
-                $albums[$pos]->setSerie($_POST['series']);
-            }else if(!empty($_POST['price'])){
-                $albums[$pos]->setPrice($_POST['price']);
-            }else if(!empty($_POST['f_name'])){
-                $albums[$pos]->getAuteur()->setFirstName($_POST['f_name']);
-            }else if(!empty($_POST['l_name'])){
-                $albums[$pos]->getAuteur()->setLastName($_POST['l_name']);
-            }else if(!empty($_POST['nationality'])){
-                $albums[$pos]->getAuteur()->setNationality($_POST['series']);
-            }else if(!empty($_POST['age'])){
-                $albums[$pos]->getAuteur()->setAge($_POST['series']);
-            }else if(!empty($_POST['editor_name'])){
-                $albums[$pos]->getEditor()->setName($_POST['series']);
-            }else if(!empty($_POST['tel'])){
-                $albums[$pos]->getEditor()->setTelephone($_POST['tel']);
+        if(!empty($pos)) {
+
+            if(!empty($_GET['title'])){
+                $albums[$pos]->setTitle($_GET['title']);
+                
             }
             
+            if(!empty($_GET['series'])){
+                $albums[$pos]->setSerie($_GET['series']);
+            }
+            
+            if(!empty($_GET['price'])){
+                $albums[$pos]->setPrice($_GET['price']);
+            }
+            
+            if(!empty($_GET['auteur'])){
+                $album[$pos]->setID_Auteur($_GET['auteur']);
+            }
+            
+            if(!empty($_GET['editeur'])){
+                $album[$pos]->setID_Editeur($_GET['editeur']);
+            }
+
+            if(!empty($_GET['editeur']) && !empty($_GET['auteur'])){
+                for($i= 0; $i < count($editeurs); $i++){
+                    for($e = 0; $e < count($auteurs); $e++){
+                        
+                        if(isset($editeurs[$i])){
+                            if($editeurs[$i]->getID() == $album->getID_Editeur()){
+                                $album[$pos]->setEditor($editeurs[$i]);
+                            }
+                        }
+                        if(isset($auteurs[$e])){
+                            if($auteurs[$e]->getID() == $album->getID_Auteur()){
+                                $album[$pos]->setAuteur($auteurs[$e]);
+                            }
+                        }
+                    }
+                }
+            }  
         }
 
         for($i=0; $i < count($albums); $i++){
@@ -158,16 +173,24 @@
                     <select class="form-control" name="auteur" id="exampleFormControlSelect1">
                     <?php 
                     for($i=0;$i<count($auteurs);$i++){
-                        echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                        if($auteurs[$i]->getID() == $albums[$pos]->getID_Auteur()){
+                            echo '<option value="'.$auteurs[$i]->getID().'"selected>'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                        }else{
+                            echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                        }
                     } ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Editeur</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                    <select class="form-control" name="editeur" id="exampleFormControlSelect1">
                     <?php
-                    for($i=0;$i<count($editeurs);$i++){
-                        echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
+                    for($i=0;$i<count($editeurs);$i++){               
+                        if($editeurs[$i]->getID() == $albums[$pos]->getID_Editeur()){
+                            echo '<option selected value="'.$editeurs[$i]->getID().'"selected>'.$editeurs[$i]->getName().' </option>';
+                        }else{
+                            echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
+                        }
                     } ?>
                     </select>
                 </div>

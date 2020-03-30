@@ -24,6 +24,12 @@
         if(!empty($admin) && $admin == 1){
             echo '<li class="nav-item">
             <a class="nav-link" href="https://mmi.romainpltr.fr/dutaf/admin/bd_gestion.php" tabindex="-1" aria-disabled="true">Gestion de la base de données</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://mmi.romainpltr.fr/dutaf/admin/auteurs/auteurs_gestion.php" tabindex="-1" aria-disabled="true">Gestion des auteurs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="https://mmi.romainpltr.fr/dutaf/admin/editeurs/editeurs_gestion.php" tabindex="-1" aria-disabled="true">Gestion des éditeurs</a>
         </li>';
         }
         

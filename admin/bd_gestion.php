@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <?php 
-
     session_start();
     include('../classes/livres.php');
     require('../functions/function_bdd.php');
@@ -12,7 +11,7 @@
     // On vérifie si il n'existe pas les tableau dans la session
     if(!empty($_SESSION['albums'])){
         $albums = unserialize($_SESSION['albums']);
-     }
+    }
     if(!empty($_SESSION['auteurs'])){
         $auteurs = unserialize($_SESSION['auteurs']);
     } 
@@ -69,7 +68,7 @@
 
         // On affecte les auteurs et editeurs en fonction de leurs id au livres oû les id sont correspondant
         for($i= 0; $i < count($editeurs); $i++){
-            for($i= 0; $i < count($auteurs); $i++){
+            for($e = 0; $e < count($auteurs); $e++){
                 for($a= 0; $a < count($albums); $a++){
                     if(isset($editeurs[$i])){
                         if($editeurs[$i]->getID() == $albums[$a]->getID_Editeur()){
@@ -154,9 +153,9 @@
 
     echo '</tbody></table></div></div>';
     
-    $_SESSION['albums'] = serialize($albums);
-    $_SESSION['auteurs'] = serialize($auteurs);
-    $_SESSION['editeurs'] = serialize($editeurs);
+    $_SESSION['albums'] = serialize($albums); // Tableau des albums contenant les auteurs et editeurs en fonction de leur id.
+    $_SESSION['auteurs'] = serialize($auteurs);  // Tableau des auteurs 
+    $_SESSION['editeurs'] = serialize($editeurs); // Tableau des éditeurs 
 
     ?>
     </body>
