@@ -1,3 +1,4 @@
+<?php include('functions/function_bdd.php'); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,9 +16,8 @@
     include('config_inc.php');
     if(isset($_GET['auteur'])){
         $auteur = $_GET['auteur'];
-        $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
         $req = 'SELECT * from auteur INNER JOIN album ON auteur.auteur_id = album.auteur_id_ INNER JOIN editeur ON album.editeur_id_ = editeur.editeur_id WHERE (auteur.auteur_nom LIKE "%'.$auteur.'%") OR (auteur.auteur_prenom LIKE "%'.$auteur.'%") ORDER BY auteur.auteur_nom, auteur.auteur_prenom ASC';
-        $res = $bdd->query($req);
+        $res = BDD_Select($req, $res);
         echo '<br><div class="container"><table id="table_id" class="table"><thead>';
         echo '<tr><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th></tr></thead><tbody>';
         while($ligne = $res->fetch()){

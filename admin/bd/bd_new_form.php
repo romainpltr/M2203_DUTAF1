@@ -1,6 +1,6 @@
 <?php 
-    include('../classes/livres.php');
-    include('../config_inc.php');
+    include('../../classes/livres.php');
+    include('../../config_inc.php');
 
     $albums = array();
     $auteurs = array();
@@ -32,7 +32,7 @@
         <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
     </head>
     <body>
-        <?php include '../includes/header.php'; ?>
+        <?php include '../../includes/header.php'; ?>
         <div class="container">
         <br>
             <?php if(!empty($_GET['type']) && $_GET['type'] == "livre"){ // Ajouter livre dans BDD + Créer Objet et l'ajouter dans le tableau.
@@ -74,42 +74,6 @@
                     }
                     echo '
                     </select>
-                </div>
-                <button type="submit" class="btn btn-success">Ajouter</button> 
-                </form>';
-            }else if(!empty($_GET['type']) && $_GET['type'] == "auteur"){
-            
-                echo '<form action="bd_new_valide.php" method="GET" ><div class="form-group">
-                    <label for="exampleInputPassword1">Prénom de l`auteur :</label>
-                    <input  class="form-control" name="a_prenom" id="exampleInputPassword1">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Nom de l`auteur :</label>
-                    <input  class="form-control" name="a_name" id="exampleInputPassword1">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Nationalité de l`auteur :</label>
-                    <input  class="form-control" name="a_nationalite" id="exampleInputPassword1">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Age de l`auteur:</label>
-                    <input  class="form-control" name="a_age" id="exampleInputPassword1">
-                </div>
-                <button type="submit" class="btn btn-success">Ajouter</button>
-                </form>';
-            }else if(!empty($_GET['type']) && $_GET['type'] == "editeur"){
-                echo '
-                <form action="bd_new_valide.php" method="GET" ><div class="form-group">
-                    <label for="exampleInputPassword1">Nom de l`editeur :</label>
-                    <input class="form-control" name="e_name" id="exampleInputPassword1">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Pays de l`editeur :</label>
-                    <input class="form-control" name="e_country" id="exampleInputPassword1">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Téléphone de l`editeur :</label>
-                    <input class="form-control" name="e_tel" id="exampleInputPassword1"> 
                 </div>
                 <button type="submit" class="btn btn-success">Ajouter</button> 
                 </form>';

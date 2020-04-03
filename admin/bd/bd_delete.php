@@ -1,29 +1,28 @@
 <?php 
 session_start();
-include('../config_inc.php');
-include('../classes/livres.php');
-require('../functions/function_bdd.php');
+
+include('../../classes/livres.php');
+include('../../functions/function_bdd.php');
 
 $albums = unserialize($_SESSION['albums']);
 $num_id = $_GET['num_id'];
-$pos;
 $album_name;
 
 
 $req = 'DELETE FROM album WHERE album_id = '.$num_id.'';
 BDD_Del($req);
 
-for($i=0; $i < count($albums); $i++){
+for($i=0; $i <= count($albums); $i++){
     if(!empty($albums[$i])){
         if(isset($num_id) && $albums[$i]->getID() == $num_id){
-            $pos = $i;
             $album_name = $albums[$i]->getTitle();
+            unset($albums[$i]);
         }
     }
 }
 
 
-unset($albums[$pos]);
+
 
 
 $_SESSION['albums'] = serialize($albums);

@@ -1,5 +1,5 @@
 <?php 
-include('../config_inc.php');
+include('../../config_inc.php');
 
 function BDD_Select($req, $res){
     $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
@@ -19,10 +19,10 @@ function BDD_Del($req){
     $bdd->query($req);
 }
 
-function BDD_Update($req){
+function BDD_Update($req, $data){
     $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
     $res = $bdd->prepare($req);
-    $res->execute();
+    $res->execute($data);
 }
 
 

@@ -10,5 +10,8 @@
         <?php include('includes/header.php'); ?>
         <footer>
         </footer>
+        <script type="text/javascript" src="contents/js/jquery-3.4.1.min.js"></script> 
+        <script type="text/javascript" src="contents/js/popper.min.js"></script>
+        <script type="text/javascript" src="contents/js/bootstrap.min.js"></script>
     </body>
 </html>

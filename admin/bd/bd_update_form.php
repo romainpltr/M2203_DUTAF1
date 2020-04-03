@@ -1,17 +1,17 @@
-<?php 
+<?php       
+        include('../../classes/livres.php');
+        include('../../functions/function_bdd.php');
 
-        // Include classe livres
-        include ('../functions/function_bdd.php');
-        include('../classes/livres.php');
-        include('../config_inc.php');
-        
-
+        session_start();
         // Variables
 
         $num_id;
         $admin = 1;
         $pos;
-
+        $albums;
+        $auteurs;
+        $editeurs;
+   
         // Si aucune $_SESSION['albums'] existe.
 
         if(empty($_SESSION['albums'])){
@@ -85,12 +85,42 @@
         if(!empty($_SESSION['albums'])){
             $albums = unserialize($_SESSION['albums']);
         }
-        
+
+        if(!empty($_SESSION['auteurs'])){
+            $auteurs = unserialize($_SESSION['auteurs']);
+        }
+
+        if(!empty($_SESSION['editeurs'])){
+            $editeurs = unserialize($_SESSION['editeurs']);
+        }
+
+        if(isset($_SESSION['pos']) && isset($_SESSION['num'])){
+            $pos = $_SESSION['pos'];
+            $num_id = $_SESSION['num'];
+            unset($_SESSION['pos']);
+            unset($_SESSION['num']);
+        }
+       
         // Si le num id = post => $num_id = id 
-        !empty($_GET['num_id']) ?$num_id = $_GET['num_id']:""; ;
+        !empty($_GET['num_id']) ?$num_id = $_GET['num_id']:"";
+        isset($_SESSION['num'])?$num_id = $_SESSION['num']:"";
+        
+        if(!isset($_SESSION['pos']) && !isset($_SESSION['num'])){
+            for($i=0; $i < count($albums); $i++){
+                if(!empty($albums[$i])){
+                    if($albums[$i]->getID() == $num_id){
+                        $pos = $i;
+                    }
+                }
+            }
+            $_SESSION['num'] = $num_id;
+            $_SESSION['pos'] = $pos;
+        }
 
-        if(!empty($pos)) {
-
+  
+        if(isset($_SESSION['pos'])) {
+        
+            
             if(!empty($_GET['title'])){
                 $albums[$pos]->setTitle($_GET['title']);
                 
@@ -101,43 +131,62 @@
             }
             
             if(!empty($_GET['price'])){
-                $albums[$pos]->setPrice($_GET['price']);
+                $albums[$pos]->setPrix($_GET['price']);
             }
             
             if(!empty($_GET['auteur'])){
-                $album[$pos]->setID_Auteur($_GET['auteur']);
-            }
-            
-            if(!empty($_GET['editeur'])){
-                $album[$pos]->setID_Editeur($_GET['editeur']);
-            }
-
-            if(!empty($_GET['editeur']) && !empty($_GET['auteur'])){
-                for($i= 0; $i < count($editeurs); $i++){
+                
+                if($albums[$pos]->getID_Auteur() != $_GET['auteur']){
+                    $albums[$pos]->setID_Auteur($_GET['auteur']);
                     for($e = 0; $e < count($auteurs); $e++){
-                        
-                        if(isset($editeurs[$i])){
-                            if($editeurs[$i]->getID() == $album->getID_Editeur()){
-                                $album[$pos]->setEditor($editeurs[$i]);
-                            }
-                        }
                         if(isset($auteurs[$e])){
-                            if($auteurs[$e]->getID() == $album->getID_Auteur()){
-                                $album[$pos]->setAuteur($auteurs[$e]);
+                            if($auteurs[$e]->getID() == $albums[$pos]->getID_Auteur()){
+                                $albums[$pos]->setAuteur($auteurs[$e]);
                             }
                         }
                     }
                 }
-            }  
-        }
-
-        for($i=0; $i < count($albums); $i++){
-            if(!empty($albums[$i])){
-                if(!empty($num_id) && $albums[$i]->getID() == $num_id){
-                    $pos = $i;
+            }
+            
+            if(!empty($_GET['editeur'])){
+                if($albums[$pos]->getID_Editeur() != $_GET['editeur']){
+                    $albums[$pos]->setID_Editeur($_GET['editeur']);
+                    for($i= 0; $i < count($editeurs); $i++){
+                        if(isset($editeurs[$i])){
+                            if($editeurs[$i]->getID() == $albums[$pos]->getID_Editeur()){
+                                $albums[$pos]->setEditor($editeurs[$i]);
+                            }
+                        }
+                    }
                 }
+
+                $data = [
+                    'isbn' => $_GET['isbn'],
+                    'title' => $_GET['title'],
+                    'series' => $_GET['series'],
+                    'price' => $_GET['price'],
+                    'auteur' => $_GET['auteur'],
+                    'editeur' => $_GET['editeur'],
+                    'id' => $num_id
+                ];
+
+                $req = "UPDATE album SET album_isbn=:isbn, album_serie=:series, album_titre=:title, album_prix=:price, auteur_id_=:auteur, editeur_id_=:editeur WHERE album_id=:id";
+                BDD_Update($req, $data);
+
+                $_SESSION['erreurs']['success'] = '<br><div class="alert alert-success" role="alert">
+                Vous venez de modifier l\'album : '.$albums[$pos]->getTitle().'  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>';
+                
+                header('Location: bd_gestion.php');
+                $_SESSION['albums'] = serialize($albums); // Tableau des albums contenant les auteurs et editeurs en fonction de leur id.
+                $_SESSION['auteurs'] = serialize($auteurs);  // Tableau des auteurs 
+                $_SESSION['editeurs'] = serialize($editeurs); // Tableau des éditeurs 
+
             }
         }
+            
 
 ?>
 <!DOCTYPE html>
@@ -148,13 +197,13 @@
         <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
     </head>
     <body>
-        <?php include '../includes/header.php'; ?>
+        <?php include '../../includes/header.php'; ?>
         <div class="container">
         <br>
         <form action="#" method="GET" >
             <div class="form-group">
                 <label for="exampleInputEmail1">ISBN :</label>
-                <input class="form-control" name="isbn" id="exampleInputEmail1" value="<?php echo $albums[$pos]->getISBN(); ?>" aria-describedby="emailHelp">
+                <input class="form-control" name="isbn" id="exampleInputEmail1" value="<?php  echo $albums[$pos]->getISBN(); ?>" aria-describedby="emailHelp">
              </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Titre :</label>
@@ -172,26 +221,32 @@
                     <label for="exampleFormControlSelect1">Auteur</label>
                     <select class="form-control" name="auteur" id="exampleFormControlSelect1">
                     <?php 
-                    for($i=0;$i<count($auteurs);$i++){
-                        if($auteurs[$i]->getID() == $albums[$pos]->getID_Auteur()){
-                            echo '<option value="'.$auteurs[$i]->getID().'"selected>'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
-                        }else{
-                            echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                        for($i=0;$i<count($auteurs);$i++){
+                            if(!empty($auteurs[$i])){
+                                if($auteurs[$i]->getID() == $albums[$pos]->getID_Auteur()){
+                                    echo '<option value="'.$auteurs[$i]->getID().'"selected>'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                                }else{
+                                    echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
+                                }
+                            }
                         }
-                    } ?>
+                    ?>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Editeur</label>
                     <select class="form-control" name="editeur" id="exampleFormControlSelect1">
                     <?php
-                    for($i=0;$i<count($editeurs);$i++){               
-                        if($editeurs[$i]->getID() == $albums[$pos]->getID_Editeur()){
-                            echo '<option selected value="'.$editeurs[$i]->getID().'"selected>'.$editeurs[$i]->getName().' </option>';
-                        }else{
-                            echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
-                        }
-                    } ?>
+                        for($i=0;$i<count($editeurs);$i++){ 
+                            if(!empty($editeurs[$i])){              
+                                if($editeurs[$i]->getID() == $albums[$pos]->getID_Editeur()){
+                                    echo '<option selected value="'.$editeurs[$i]->getID().'"selected>'.$editeurs[$i]->getName().' </option>';
+                                }else{
+                                    echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
+                                }
+                            }
+                        } 
+                    ?>
                     </select>
                 </div>
             <button type="submit" class="btn btn-success">Modifier</button> 
@@ -205,3 +260,4 @@
         </div>
     </body>
 </html>
+

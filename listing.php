@@ -63,18 +63,18 @@ if(empty($albums)){
 
     $res->closeCursor();
 
-    for($i= 0; $i < count($editeurs); $i++){
-        for($i= 0; $i < count($auteurs); $i++){
-            for($a= 0; $a < count($albums); $a++){
-                if(isset($editeurs[$i])){
-                    if($editeurs[$i]->getID() == $albums[$a]->getID_Editeur()){
-                        $albums[$a]->setEditor($editeurs[$i]);
-                    }
+    for($i= 0; $i < count($albums); $i++){
+        for($a = 0; $a < count($auteurs); $a++){
+            if(isset($auteurs[$a])){
+                if($auteurs[$a]->getID() == $albums[$i]->getID_Auteur()){
+                     $albums[$i]->setAuteur($auteurs[$a]);
                 }
-                if(isset($auteurs[$i])){
-                    if($auteurs[$i]->getID() == $albums[$a]->getID_Auteur()){
-                        $albums[$a]->setAuteur($auteurs[$i]);
-                    }
+            }
+        }
+        for($e= 0; $e < count($editeurs); $e++){
+            if(isset($editeurs[$e])){
+                if($editeurs[$e]->getID() == $albums[$i]->getID_Editeur()){
+                    $albums[$i]->setEditor($editeurs[$e]);
                 }
             }
         }
@@ -93,70 +93,73 @@ if(empty($albums)){
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
         </head>
+        <body>
+            <?php 
+            
+            include('includes/header.php');
+            
+            echo '<br><div class="container"><table id="table_id" class="table table-striped table-bordered"><thead>';
+            echo '<tr><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th></tr></thead><tbody>';
 
-    <body>
-    <?php include('includes/header.php');?>
-    
-    <?php 
-    
-    echo '<br><div class="container"><table id="table_id" class="table table-striped table-bordered"><thead>';
-    echo '<tr><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th></tr></thead><tbody>';
-
-    for($i = 0; $i < count($albums); $i++){
-        if(!empty($albums[$i])){
-            echo '<tr>
-            <td>'.$albums[$i]->getISBN().'</td>
-            <td>'.$albums[$i]->getTitle().'</td>
-            <td>'.$albums[$i]->getSerie().'</td>
-            <td>'.$albums[$i]->getPrix().' €</td>';
-        
-            if(!empty($albums[$i]->getAuteur())){
-                echo '<td>'.$albums[$i]->getAuteur()->getLastName().'</td>
-                <td>'.$albums[$i]->getAuteur()->getFirstName().'</td>
-                <td>'.$albums[$i]->getAuteur()->getNationality().'</td>
-                <td>'.$albums[$i]->getAuteur()->getAge().'</td>';
-            }else{
-                echo '<td></td><td></td><td></td><td></td>';
-            }
-
-            if(!empty($albums[$i]->getEditor())){
-                echo '<td>'.$albums[$i]->getEditor()->getName().'</td>
-                <td>'.$albums[$i]->getEditor()->getCountry().'</td>
-                <td>'.$albums[$i]->getEditor()->getTelephone().'</td>
-                </tr>';
-            }else{
-                echo '<td></td><td></td><td></td><td></td>';
-            }
-        }
-    }
-
-    echo '</tbody></table></div>';
-    
-    $_SESSION['albums'] = serialize($albums);
-    $_SESSION['auteurs'] = serialize($auteurs);
-    $_SESSION['editeurs'] = serialize($editeurs);
-
-    ?>
-     <script src="https://code.jquery.com/jquery-3.4.1.js"></script> 
-     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-     <script type="text/javascript">
-            $(document).ready(function () {
-                $('#table_id').DataTable({
-                    "language": {
-                        "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
-                    },
-                    "initComplete": function () {
-                        var api = this.api();
-                        // Put the sum of column 5 into the footer cell
-                        $( api.column( 5 ).footer() ).html(
-                            api.column( 5 ).data().reduce( function (a, b) {
-                                return a + b;
-                            } )
-                        );
+            for($i = 0; $i < count($albums); $i++){
+                if(!empty($albums[$i])){
+                    echo '<tr>
+                    <td>'.$albums[$i]->getISBN().'</td>
+                    <td>'.$albums[$i]->getTitle().'</td>
+                    <td>'.$albums[$i]->getSerie().'</td>
+                    <td>'.$albums[$i]->getPrix().' €</td>';
+                
+                    if(!empty($albums[$i]->getAuteur())){
+                        echo '<td>'.$albums[$i]->getAuteur()->getLastName().'</td>
+                        <td>'.$albums[$i]->getAuteur()->getFirstName().'</td>
+                        <td>'.$albums[$i]->getAuteur()->getNationality().'</td>
+                        <td>'.$albums[$i]->getAuteur()->getAge().'</td>';
+                    }else{
+                        echo '<td></td><td></td><td></td><td></td>';
                     }
-                });
-            });
-    </script>
-    </body>
+
+                    if(!empty($albums[$i]->getEditor())){
+                        echo '<td>'.$albums[$i]->getEditor()->getName().'</td>
+                        <td>'.$albums[$i]->getEditor()->getCountry().'</td>
+                        <td>'.$albums[$i]->getEditor()->getTelephone().'</td>
+                        </tr>';
+                    }else{
+                        echo '<td></td><td></td><td></td><td></td>';
+                    }
+                }
+            }
+
+            echo '</tbody></table></div>';
+            
+            $_SESSION['albums'] = serialize($albums);
+            $_SESSION['auteurs'] = serialize($auteurs);
+            $_SESSION['editeurs'] = serialize($editeurs);
+
+            ?>
+            <footer>  
+                <script type="text/javascript" src="contents/js/jquery-3.4.1.min.js"></script> 
+                <script type="text/javascript" src="contents/js/popper.min.js"></script>
+                <script type="text/javascript" src="contents/js/bootstrap.min.js"></script>
+                <script type="text/javascript" src="contents/js/query.dataTables.min.js"></script>
+                <script type="text/javascript" src="contents/js/jquery.dataTables.min.js"></script>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('#table_id').DataTable({
+                            "language": {
+                                "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                            },
+                            "initComplete": function () {
+                                var api = this.api();
+                                // Put the sum of column 5 into the footer cell
+                                $( api.column( 5 ).footer() ).html(
+                                    api.column( 5 ).data().reduce( function (a, b) {
+                                        return a + b;
+                                    } )
+                                );
+                            }
+                        });
+                    });
+                </script>
+            </footer>
+        </body>
     </html>
