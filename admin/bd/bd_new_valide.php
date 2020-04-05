@@ -38,7 +38,7 @@ if(!empty($_GET['l_title']) || !empty($_GET['l_isbn']) || !empty($_GET['l_serie'
     $album->setID_Editeur($id_editeur);
 
     for($i= 0; $i < count($editeurs); $i++){
-        if(isset($editeurs[$i])){
+        if(!empty($editeurs[$i])){
             if($editeurs[$i]->getID() == $album->getID_Editeur()){
                 $album->setEditor($editeurs[$i]);
             }
@@ -46,7 +46,7 @@ if(!empty($_GET['l_title']) || !empty($_GET['l_isbn']) || !empty($_GET['l_serie'
     }
     
     for($e = 0; $e < count($auteurs); $e++){
-        if(isset($auteurs[$e])){
+        if(!empty($auteurs[$e])){
             if($auteurs[$e]->getID() == $album->getID_Auteur()){
                 $album->setAuteur($auteurs[$e]);
             }

@@ -1,27 +1,22 @@
-<!DOCTYPE html>
+
 <?php 
     session_start();
     include('../../classes/livres.php');
     include('../../functions/function_bdd.php');
 
     $admin = 1;
-    $albums = array();
-    $auteurs = array();
-    $editeurs = array();
-
     // On vérifie si il n'existe pas les tableau dans la session
-    if(!empty($_SESSION['albums'])){
-        $albums = unserialize($_SESSION['albums']);
-    }
     if(!empty($_SESSION['auteurs'])){
         $auteurs = unserialize($_SESSION['auteurs']);
     } 
-    if(!empty($_SESSION['editeurs'])){
-        $editeurs = unserialize($_SESSION['editeurs']);
-    }
-
     // Sinon on récupere les données depuis la base de données
     if(empty($albums) || empty($auteurs) || empty($editeurs)){
+        if(!empty($_SESSION['albums'])){
+            $albums = unserialize($_SESSION['albums']);
+        }
+        if(!empty($_SESSION['editeurs'])){
+            $editeurs = unserialize($_SESSION['editeurs']);
+        }
         $albums = array();
         $auteurs = array();
         $editeurs = array();
@@ -88,10 +83,14 @@
                 }
             }
         }
+
+        $_SESSION['albums'] = serialize($albums); // Tableau des albums contenant les auteurs et editeurs en fonction de leur id.
+        $_SESSION['editeurs'] = serialize($editeurs); // Tableau des éditeurs 
+
     }
- 
     
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <title>Listing DUTAF</title>
@@ -121,17 +120,16 @@
 
         <table id="table_id" class="table"><thead>';
 
-        echo '<tr><th scope="col">ID des Auteurs</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th></th><th></th></th></thead><tbody>';
-                
+        echo '<tr><th scope="col">ID des Auteurs</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th></th><th></th></th></thead><tbody>'; 
                 for($i = 0; $i <= count($auteurs); $i++){
                     if(!empty($auteurs[$i])){
                         echo '<td>'.$auteurs[$i]->getID().'</td>
-                        <td>'.$auteurs[$i]->getLastName().'</td>
-                                    <td>'.$auteurs[$i]->getFirstName().'</td>
-                                    <td>'.$auteurs[$i]->getNationality().'</td>
-                                    <td>'.$auteurs[$i]->getAge().'</td>';
+                                <td>'.$auteurs[$i]->getLastName().'</td>
+                                <td>'.$auteurs[$i]->getFirstName().'</td>
+                                <td>'.$auteurs[$i]->getNationality().'</td>
+                                 <td>'.$auteurs[$i]->getAge().'</td>';
                     
-                        echo '<td><a href=auteur_update_form.php?num_id='.$auteurs[$i]->getID().'"><button type="button" class="btn btn-primary">Modifier</button></a></td>
+                        echo '<td><a href="auteur_update_form.php?num_id='.$auteurs[$i]->getID().'"><button type="button" class="btn btn-primary">Modifier</button></a></td>
                         <td><a href="auteur_delete.php?num_id='.$auteurs[$i]->getID().'"> <button type="button" class="btn btn-danger">Supprimer</button></a></td>';
                     }
                echo '</tr>';
@@ -139,10 +137,8 @@
 
         echo '</tbody></table></div></div>';
         
-        $_SESSION['albums'] = serialize($albums); // Tableau des albums contenant les auteurs et editeurs en fonction de leur id.
         $_SESSION['auteurs'] = serialize($auteurs);  // Tableau des auteurs 
-        $_SESSION['editeurs'] = serialize($editeurs); // Tableau des éditeurs 
-
+     
         ?>
         <footer>  
         <script type="text/javascript" src="../../contents/js/jquery-3.4.1.min.js"></script> 

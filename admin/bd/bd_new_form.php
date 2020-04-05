@@ -80,8 +80,6 @@
             }
             ?>
             
-            
-            
             </form>
             <br>
             <a href="bd_gestion.php"><button class="btn btn-primary">Retour</button></a>
