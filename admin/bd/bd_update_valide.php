@@ -19,7 +19,7 @@
     }
 
     // POSTION DANS LE TABLEAU ALBUM = ALBUM SELECTIONNER
-    if(empty($_GET['idAlbum']) || $_GET['idAlbum'] == "0"){
+    if(!empty($_GET['idAlbum']) || $_GET['idAlbum'] == "0"){
         // POUR PLUS DE SECURITER FAIRE LES VERIFICATIONS HERE
         $album_selected = $_GET['idAlbum'];
     }
