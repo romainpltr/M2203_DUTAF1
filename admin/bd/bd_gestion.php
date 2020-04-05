@@ -114,7 +114,7 @@
         echo '
         <center><a href="bd_new_form.php?type=livre"> <button type="button" class="pull-right btn btn-lg btn-warning">Ajouter un livre</button></a></center>
         </div><br>
-        <center><p>Nombre actuel de livre : '.count($albums).' Nombre actuel d`auteurs : '.count($auteurs).' Nombre actuel d`editeurs : '.count($editeurs).'</p></center> 
+        <center><h4>Nombre actuel de livre : <span class="badge badge-pill badge-danger">'.count($albums).'</span></h4>Nombre actuel d`auteurs : '.count($auteurs).' Nombre actuel d`editeurs : '.count($editeurs).'</p></center> 
         
         <div class="container-fluid">    
         <br>
@@ -138,7 +138,7 @@
                                     <td>'.$albums[$i]->getAuteur()->getNationality().'</td>
                                     <td>'.$albums[$i]->getAuteur()->getAge().'</td>';
                                 }else{
-                                    echo '<td></td><td></td><td></td>';
+                                    echo '<td></td><td></td><td></td><td></td>';
                                 }
 
                                 if(!empty($albums[$i]->getEditor())){

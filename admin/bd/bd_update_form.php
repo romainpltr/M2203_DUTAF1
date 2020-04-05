@@ -4,17 +4,25 @@
 
         session_start();
         // Variables
-
-        $num_id;
+        $num_id = $_GET['num_id']; // 
+        $position_tableau_albums;
         $admin = 1;
-        $pos;
-        $albums;
-        $auteurs;
-        $editeurs;
    
-        // Si aucune $_SESSION['albums'] existe.
+        // Si la session exite alors on deserialise 
+        if(!empty($_SESSION['albums'])){
+            $albums = unserialize($_SESSION['albums']);
+        }
 
-        if(empty($_SESSION['albums'])){
+        if(!empty($_SESSION['auteurs'])){
+            $auteurs = unserialize($_SESSION['auteurs']);
+        }
+
+        if(!empty($_SESSION['editeurs'])){
+            $editeurs = unserialize($_SESSION['editeurs']);
+        }
+
+        // Si aucune $_SESSION['albums'] existe. alors on la créer
+        if(empty($albums) || empty($auteurs) || empty($editeurs)){
             $albums = array();
             $auteurs = array();
             $editeurs = array();
@@ -79,114 +87,25 @@
                 }
             }
         }
-
-        // Si la session exite alors on deserialise 
-
-        if(!empty($_SESSION['albums'])){
-            $albums = unserialize($_SESSION['albums']);
-        }
-
-        if(!empty($_SESSION['auteurs'])){
-            $auteurs = unserialize($_SESSION['auteurs']);
-        }
-
-        if(!empty($_SESSION['editeurs'])){
-            $editeurs = unserialize($_SESSION['editeurs']);
-        }
-
-        if(isset($_SESSION['pos']) && isset($_SESSION['num'])){
-            $pos = $_SESSION['pos'];
-            $num_id = $_SESSION['num'];
-            unset($_SESSION['pos']);
-            unset($_SESSION['num']);
-        }
-       
-        // Si le num id = post => $num_id = id 
-        !empty($_GET['num_id']) ?$num_id = $_GET['num_id']:"";
-        isset($_SESSION['num'])?$num_id = $_SESSION['num']:"";
         
-        if(!isset($_SESSION['pos']) && !isset($_SESSION['num'])){
-            for($i=0; $i < count($albums); $i++){
-                if(!empty($albums[$i])){
-                    if($albums[$i]->getID() == $num_id){
-                        $pos = $i;
-                    }
+        // On récupere l'indice de notre tableau désérializé pour récuperer les infos de notre objet par la suite
+        if(!empty($_GET['num_id']) || $_GET['num_id'] == "0"){
+            for($i = 0; $i < count($albums); $i++){
+                
+                if($albums[$i]->getID() == $num_id){
+                    $position_tableau_albums = $i;
                 }
             }
-            $_SESSION['num'] = $num_id;
-            $_SESSION['pos'] = $pos;
         }
 
-  
-        if(isset($_SESSION['pos'])) {
-        
-            
-            if(!empty($_GET['title'])){
-                $albums[$pos]->setTitle($_GET['title']);
-                
-            }
-            
-            if(!empty($_GET['series'])){
-                $albums[$pos]->setSerie($_GET['series']);
-            }
-            
-            if(!empty($_GET['price'])){
-                $albums[$pos]->setPrix($_GET['price']);
-            }
-            
-            if(!empty($_GET['auteur'])){
-                
-                if($albums[$pos]->getID_Auteur() != $_GET['auteur']){
-                    $albums[$pos]->setID_Auteur($_GET['auteur']);
-                    for($e = 0; $e < count($auteurs); $e++){
-                        if(isset($auteurs[$e])){
-                            if($auteurs[$e]->getID() == $albums[$pos]->getID_Auteur()){
-                                $albums[$pos]->setAuteur($auteurs[$e]);
-                            }
-                        }
-                    }
-                }
-            }
-            
-            if(!empty($_GET['editeur'])){
-                if($albums[$pos]->getID_Editeur() != $_GET['editeur']){
-                    $albums[$pos]->setID_Editeur($_GET['editeur']);
-                    for($i= 0; $i < count($editeurs); $i++){
-                        if(isset($editeurs[$i])){
-                            if($editeurs[$i]->getID() == $albums[$pos]->getID_Editeur()){
-                                $albums[$pos]->setEditor($editeurs[$i]);
-                            }
-                        }
-                    }
-                }
 
-                $data = [
-                    'isbn' => $_GET['isbn'],
-                    'title' => $_GET['title'],
-                    'series' => $_GET['series'],
-                    'price' => $_GET['price'],
-                    'auteur' => $_GET['auteur'],
-                    'editeur' => $_GET['editeur'],
-                    'id' => $num_id
-                ];
+        // On reserialize
+        $_SESSION['albums'] = serialize($albums); // Tableau des albums contenant les auteurs et editeurs en fonction de leur id.
+        $_SESSION['auteurs'] = serialize($auteurs);  // Tableau des auteurs 
+        $_SESSION['editeurs'] = serialize($editeurs); // Tableau des éditeurs 
 
-                $req = "UPDATE album SET album_isbn=:isbn, album_serie=:series, album_titre=:title, album_prix=:price, auteur_id_=:auteur, editeur_id_=:editeur WHERE album_id=:id";
-                BDD_Update($req, $data);
+        // On affiche les infos de notre objet pour pouvoir le modifier
 
-                $_SESSION['erreurs']['success'] = '<br><div class="alert alert-success" role="alert">
-                Vous venez de modifier l\'album : '.$albums[$pos]->getTitle().'  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                </div>';
-                
-                header('Location: bd_gestion.php');
-                $_SESSION['albums'] = serialize($albums); // Tableau des albums contenant les auteurs et editeurs en fonction de leur id.
-                $_SESSION['auteurs'] = serialize($auteurs);  // Tableau des auteurs 
-                $_SESSION['editeurs'] = serialize($editeurs); // Tableau des éditeurs 
-
-            }
-        }
-            
 
 ?>
 <!DOCTYPE html>
@@ -200,37 +119,41 @@
         <?php include '../../includes/header.php'; ?>
         <div class="container">
         <br>
-        <form action="#" method="GET" >
+        <form action='bd_update_valide.php' method="GET" >
             <div class="form-group">
                 <label for="exampleInputEmail1">ISBN :</label>
-                <input class="form-control" name="isbn" id="exampleInputEmail1" value="<?php  echo $albums[$pos]->getISBN(); ?>" aria-describedby="emailHelp">
+                <input class="form-control" name="isbn" id="exampleInputEmail1" value="<?php  echo $albums[$position_tableau_albums]->getISBN(); ?>" aria-describedby="emailHelp">
              </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Titre :</label>
-                <input class="form-control" name="title" id="exampleInputEmail1" value="<?php echo $albums[$pos]->getTitle(); ?>" aria-describedby="emailHelp">
+                <input class="form-control" name="title" id="exampleInputEmail1" value="<?php echo $albums[$position_tableau_albums]->getTitle(); ?>" aria-describedby="emailHelp">
              </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Série :</label>
-                <input  class="form-control" name="series" value="<?php echo $albums[$pos]->getSerie(); ?>" id="exampleInputPassword1">
+                <input  class="form-control" name="series" value="<?php echo $albums[$position_tableau_albums]->getSerie(); ?>" id="exampleInputPassword1">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Prix :</label>
-                <input  class="form-control" name="price" value="<?php echo $albums[$pos]->getPrix(); ?>" id="exampleInputPassword1">
+                <input  class="form-control" name="price" value="<?php echo $albums[$position_tableau_albums]->getPrix(); ?>" id="exampleInputPassword1">
             </div>
             <div class="form-group">
                     <label for="exampleFormControlSelect1">Auteur</label>
                     <select class="form-control" name="auteur" id="exampleFormControlSelect1">
                     <?php 
                         for($i=0;$i<count($auteurs);$i++){
+                            var_dump($auteurs);
                             if(!empty($auteurs[$i])){
-                                if($auteurs[$i]->getID() == $albums[$pos]->getID_Auteur()){
+                                if($auteurs[$i]->getID() == $albums[$position_tableau_albums]->getID_Auteur()){
                                     echo '<option value="'.$auteurs[$i]->getID().'"selected>'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
                                 }else{
                                     echo '<option value="'.$auteurs[$i]->getID().'">'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';
                                 }
                             }
                         }
+
+                        echo '<option value="-1"> Aucun Auteur</option>';
                     ?>
+                    
                     </select>
                 </div>
                 <div class="form-group">
@@ -239,17 +162,18 @@
                     <?php
                         for($i=0;$i<count($editeurs);$i++){ 
                             if(!empty($editeurs[$i])){              
-                                if($editeurs[$i]->getID() == $albums[$pos]->getID_Editeur()){
+                                if($editeurs[$i]->getID() == $albums[$position_tableau_albums]->getID_Editeur()){
                                     echo '<option selected value="'.$editeurs[$i]->getID().'"selected>'.$editeurs[$i]->getName().' </option>';
                                 }else{
                                     echo '<option value="'.$editeurs[$i]->getID().'">'.$editeurs[$i]->getName().'</option>';
                                 }
                             }
-                        } 
+                        }
+                        echo '<option value="-1"> Aucun Editeur</option>'; 
                     ?>
                     </select>
                 </div>
-            <button type="submit" class="btn btn-success">Modifier</button> 
+            <button type="submit" name="idAlbum" value="<?php echo $position_tableau_albums ?>" class="btn btn-success">Modifier</button> 
             
             
             </form>

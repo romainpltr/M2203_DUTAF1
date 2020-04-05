@@ -127,7 +127,7 @@
                             <td>'.$editeurs[$i]->getTelephone().'</td>
                             ';
                     
-                        echo '<td><a href=editeur_update_form.php?num_id='.$editeurs[$i]->getID().'"><button type="button" class="btn btn-primary">Modifier</button></a></td>
+                        echo '<td><a href="editeur_update_form.php?num_id='.$editeurs[$i]->getID().'"><button type="button" class="btn btn-primary">Modifier</button></a></td>
                         <td><a href="editeur_delete.php?num_id='.$editeurs[$i]->getID().'"> <button type="button" class="btn btn-danger">Supprimer</button></a></td>';
                     }
                echo '</tr>';
