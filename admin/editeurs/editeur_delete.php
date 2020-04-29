@@ -17,7 +17,6 @@ for($i=0; $i < count($editeurs); $i++){
     if(!empty($editeurs[$i])){
         if(isset($num_id) && $editeurs[$i]->getID() == $num_id){
             $pos = $i;
-            echo $pos;
             $editeur_name = $editeurs[$i]->getName();
         }
     }

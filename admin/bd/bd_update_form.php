@@ -69,15 +69,17 @@
             }
     
             $res->closeCursor();
+
+            for($a= 0; $a < count($albums); $a++){
         
-            for($i= 0; $i < count($editeurs); $i++){
-                for($i= 0; $i < count($auteurs); $i++){
-                    for($a= 0; $a < count($albums); $a++){
-                        if(isset($editeurs[$i])){
-                            if($editeurs[$i]->getID() == $albums[$a]->getID_Editeur()){
-                                $albums[$a]->setEditor($editeurs[$i]);
-                            }
+                for($i= 0; $i < count($editeurs); $i++){
+                    if(isset($editeurs[$i])){
+                        if($editeurs[$i]->getID() == $albums[$a]->getID_Editeur()){
+                            $albums[$a]->setEditor($editeurs[$i]);
                         }
+                    }
+                }
+                for($i= 0; $i < count($auteurs); $i++){       
                         if(isset($auteurs[$i])){
                             if($auteurs[$i]->getID() == $albums[$a]->getID_Auteur()){
                                 $albums[$a]->setAuteur($auteurs[$i]);
@@ -86,7 +88,6 @@
                     }
                 }
             }
-        }
         
         // On récupere l'indice de notre tableau désérializé pour récuperer les infos de notre objet par la suite
         if(!empty($_GET['num_id']) || $_GET['num_id'] == "0"){
@@ -141,7 +142,6 @@
                     <select class="form-control" name="auteur" id="exampleFormControlSelect1">
                     <?php 
                         for($i=0;$i<count($auteurs);$i++){
-                            var_dump($auteurs);
                             if(!empty($auteurs[$i])){
                                 if($auteurs[$i]->getID() == $albums[$position_tableau_albums]->getID_Auteur()){
                                     echo '<option value="'.$auteurs[$i]->getID().'"selected>'.$auteurs[$i]->getFirstName().' '.$auteurs[$i]->getLastName().'</option>';

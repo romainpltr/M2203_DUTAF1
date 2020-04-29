@@ -113,8 +113,8 @@
         echo '
         <center><a href="auteur_new_form.php?type=auteur"><button type="button" class="pull-right btn btn-lg btn-warning">Ajouter un Auteur</button></a></center>
         </div><br>
-        <center><p>Nombre actuel de livre : '.count($albums).' Nombre actuel d`auteurs : '.count($auteurs).' Nombre actuel d`editeurs : '.count($editeurs).'</p></center> 
-        
+        <center><h4>Nombre actuel de livre : <span class="badge badge-pill badge-danger">'.count($albums).'</span><h4>Nombre actuel d\'auteurs : <span class="badge badge-pill badge-danger">'.count($auteurs).'</span></h4><h4>Nombre actuel d\'editeurs : <span class="badge badge-pill badge-danger">'.count($editeurs).'</span></h4></center> 
+         
         <div class="container-fluid">    
         <br>
 

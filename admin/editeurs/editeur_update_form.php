@@ -33,6 +33,7 @@
             <?php 
                 if(!empty($_GET['num_id'])){
                     echo '
+                    <br>
                     <form action="editeur_update_valide.php" method="GET" ><div class="form-group">
                         <label for="exampleInputPassword1">Nom de l`editeur :</label>
                         <input class="form-control" value="'.$editeur_Select->getName().'" name="e_name" id="exampleInputPassword1">
