@@ -1,4 +1,8 @@
-<?php include('functions/function_bdd.php'); ?>
+
+
+<?php 
+include('config_inc.php');
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,12 +16,15 @@
     <body>
     <?php include('includes/header.php');?>
     <?php 
-    
-    include('config_inc.php');
+
     if(isset($_GET['auteur'])){
         $auteur = $_GET['auteur'];
+        $bdd = new PDO('mysql:host='.BDD_SERVER.';dbname='.BDD_DATABASE.';charset=utf8', BDD_LOGIN, BDD_PASSWORD);
+   
         $req = 'SELECT * from auteur INNER JOIN album ON auteur.auteur_id = album.auteur_id_ INNER JOIN editeur ON album.editeur_id_ = editeur.editeur_id WHERE (auteur.auteur_nom LIKE "%'.$auteur.'%") OR (auteur.auteur_prenom LIKE "%'.$auteur.'%") ORDER BY auteur.auteur_nom, auteur.auteur_prenom ASC';
-        $res = BDD_Select($req, $res);
+        $res = $bdd->prepare($req);
+        $res->execute();
+        
         echo '<br><div class="container"><table id="table_id" class="table"><thead>';
         echo '<tr><th scope="col">ISBN</><th>Titre</th><th scope="col">Série</th><th scope="col">Prix</th><th scope="col">Nom de l‘auteur</th><th scope="col">Prénom de l‘auteur</th><th scope="col">Nationalité de l‘auteur</th><th scope="col">Age de l‘auteur</th><th scope="col">Nom de l‘editeur</th><th scope="col">Pays de l‘editeur</th><th scope="col">Téléphone de l‘editeur</th></tr></thead><tbody>';
         while($ligne = $res->fetch()){
@@ -40,11 +47,25 @@
     }
 
 ?>
- <script src="https://code.jquery.com/jquery-3.4.1.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script> 
-     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-     <script type="text/javascript">
-        $(document).ready( function () {
-            $('#table_id').DataTable();
-        } );
+        <script type="text/javascript" src="contents/js/jquery-3.4.1.min.js"></script> 
+        <script type="text/javascript" src="contents/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="contents/js/popper.min.js" async></script>
+        <script type="text/javascript" src="contents/js/bootstrap.min.js" async></script>
+        <script type="text/javascript" src="contents/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.10.20/i18n/French.json"
+                },
+                "initComplete": function () {
+                    var api = this.api();
+                    $( api.column( 5 ).footer() ).html(
+                        api.column( 5 ).data().reduce( function (a, b) {
+                            return a + b;
+                        } )
+                    );
+                }
+            });
+        });
     </script>

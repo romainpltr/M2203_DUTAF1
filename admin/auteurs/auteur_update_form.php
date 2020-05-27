@@ -32,6 +32,8 @@
     <body>
         <?php include '../../includes/header.php'; ?>
         <div class="container">
+            <br>
+            <center><h3>Modification de <?php echo $auteur_Select->getFirstName().' '.$auteur_Select->getLastName()?> </h3></center>
             <?php 
                 if(!empty($_GET['num_id'])){
             
