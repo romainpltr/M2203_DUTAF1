@@ -8,8 +8,8 @@ J'ai donc décidé de restreindre au maximum les requetes, et de stocker mes él
 **CE QU'IL ME RESTE A FAIRE**
 
 - ~~Implémentation des nouvaux livres, auteurs, et editeurs.~~
-- ~~Implémentation de la modification des livres, auteurs et editeurs indépendament de leur livre attribuer (Pour pouvoir modifier un ensemble de livre à la fois,   exemple la ville de l'auteur Uderzo change, je veux que tout ses bouquins au pour la ville de l'auteur, changer).
-- ~~Implémentation d'un schémat Relationnel viable et stable pour les optimisation future.
+- ~~Implémentation de la modification des livres, auteurs et editeurs indépendament de leur livre attribuer (Pour pouvoir modifier un ensemble de livre à la fois,   exemple la ville de l'auteur Uderzo change, je veux que tout ses bouquins au pour la ville de l'auteur, changer).~~
+- ~~Implémentation d'un schémat Relationnel viable et stable pour les optimisation future.~~
 
 A l'heure actuel voici le schéma relationnel de mes objets
 
